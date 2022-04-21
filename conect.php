@@ -75,10 +75,5 @@ class Login extends Connect
     public function name(){
         return $this->name;
     }
-    public function email(){
-        return $this->email;
-    }
-    public function password(){
-        return $this->password;
-    }
+  
 }

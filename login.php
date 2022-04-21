@@ -7,9 +7,6 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
         $_SESSION["login"] = true;
         $_SESSION ["id"] = $login->idUser();
         $_SESSION ["name"] = $login->name();
-        $_SESSION['id_contact']=$login->login($_POST['id_contact'],'');
-        $_SESSION ["email"] = $login->email();
-        $_SESSION ["password"] = $login->password();
         header("location: profil.php");
     }elseif ($result == 10) {
         echo
