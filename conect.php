@@ -1,6 +1,6 @@
 <?php
 session_start();
-class connect
+class Connect
 {
     // attributs:
     private $host = "localhost";
@@ -21,12 +21,12 @@ class connect
         // }
     }
 }
-$obj = new connect();
+ $obj = new Connect();
 
 
 
 
-class Register extends connect
+class Register extends Connect
 {
     public function registration($name, $email, $password, $confirm)
     {
@@ -44,17 +44,20 @@ class Register extends connect
         }
     }
 }
-class Login extends connect
+class Login extends Connect
 {
     public $id;
-    public function login($email,$password){
-        $result = mysqli_query($this->conn ,"SELECT * FROM gestion WHERE email = '$email' OR password = '$password' ");
+    public $name;
+    public $password;
+    public function login($name,$password){
+        $result = mysqli_query($this->conn ,"SELECT * FROM gestion WHERE email = '$name' OR password = '$password' ");
         $row = mysqli_fetch_assoc($result);
-
+        
         if (mysqli_num_rows($result) > 0 ) {
             if ($password == $row["password"]) {
                 $this->id = $row["id"];
                 $this->name = $row["name"];
+                $this->date = $row["date"];
                 return 1;
                 //login sucees
             }else{
@@ -71,5 +74,11 @@ class Login extends connect
     }
     public function name(){
         return $this->name;
+    }
+    public function email(){
+        return $this->email;
+    }
+    public function password(){
+        return $this->password;
     }
 }

@@ -1,12 +1,15 @@
 <?php
 include('conect.php');
 $login = new Login();
-if (isset($_POST['email']) && isset($_POST['password'])) {
-    $result = $login->login( $_POST["email"], $_POST["password"]);
+if (isset($_POST['name']) && isset($_POST['password'])) {
+    $result = $login->login( $_POST["name"], $_POST["password"]);
     if ($result == 1) {
         $_SESSION["login"] = true;
         $_SESSION ["id"] = $login->idUser();
         $_SESSION ["name"] = $login->name();
+        $_SESSION['id_contact']=$login->login($_POST['id_contact'],'');
+        $_SESSION ["email"] = $login->email();
+        $_SESSION ["password"] = $login->password();
         header("location: profil.php");
     }elseif ($result == 10) {
         echo
@@ -64,7 +67,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     <h1 style="color: #2c3e50;">Welcome Users</h1>
                     <form action="" class="h-auto" method="POST">
                     <div class=" mt-3">
-                            <input id="name" type="email" name="email" class="form-control mt-2 " id="floatingPassword" placeholder="Enter your email" required>
+                            <input id="name" type="text" name="name" class="form-control mt-2 " id="floatingPassword" placeholder="Enter your name" required>
                         </div>
                         <div class=" mt-3">
                             <input id="password" type="password" name="password" class="form-control mt-2 " id="floatingPassword" placeholder="Enter your Password" required>

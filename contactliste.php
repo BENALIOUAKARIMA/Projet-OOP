@@ -1,3 +1,12 @@
+<?php
+require_once 'operation.php';
+
+$clt = new Clt();
+
+$id = $_SESSION["id"];
+$sql = $clt->Affiche($id);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,76 +30,48 @@
 <body>
 
 
-  <!-- Modal -->
-  <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel" style="color: #2c3e50;">ADD</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form class="w-75 mx-auto" style="border-radius: 10px; box-shadow: 0px 0px 5px black; background-color:white;" method="POST">
-            <h4 class="mt-4 ms-5 fw-bold pt-3 mb-3" style="color:  #4CA1AF; font-family: 'Pacifico', cursive;">ADD NEW CONTACT</h4>
-            <div>
-              <label for="name" class="form-label ms-5 fw-bold">Name</label>
-              <input type="name" name="name" class="form-control  w-75 ms-5" required>
-            </div>
-            <div class="mb-3 mt-3">
-              <label for="email" class="form-label ms-5 fw-bold">Phone</label>
-              <input type="email" name="email" class="form-control w-75 ms-5" required>
-            </div>
-            <div>
-              <label for="phone" class="form-label ms-5 fw-bold">Adresse</label>
-              <input type="text" name="phone" class="form-control w-75 ms-5" required>
-            </div>
-            <button type="submit" name="submit" class="btn btn-primary mt-4 ms-5 mb-3 fw-bold w-25" style="background-color:  #4CA1AF;">Save</button>
-          </form>
-        </div>
 
-      </div>
-    </div>
-  </div>
   <nav class="navbar navbar-light" style=" background-color:#2c3e50;">
     <div class="container-fluid">
       <a class="navbar-brand" style="color: white;">Contact Liste</a>
       <form class="d-flex">
-        <a href="profil.php" style="text-decoration: none; color:gray; margin-right:50px;">Profile</a>
-        <a href="login.php" style="text-decoration: none; color:gray; ">Login</a>
+        <a href="profil.php" style="text-decoration: none; color:gray; margin-right:50px; color:white;">Profile</a>
+        <a href="login.php" style="text-decoration: none; color:gray; color:white; ">Login</a>
       </form>
     </div>
   </nav>
 
   <h1 class="animate__animated animate__heartBeat text-center" style="color: #2c3e50;font-family: 'Pacifico', cursive; margin-top:70px;">Contact Liste</h1>
   <table class="table mt-5">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Adresse</th>
-        <th scope="col">Edit or Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>99887</td>
-        <td>@mdo</td>
-        <td><button type="button" class="btn btn-secondary">Edit</button> <button type="button" class="btn btn-danger">Delet</button></td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>77667</td>
-        <td>@fat</td>
-        <td><button type="button" class="btn btn-secondary">Edit</button> <button type="button" class="btn btn-danger">Delete</button></td>
-      </tr>
+    <table class="border-top" id="visuel">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">name</th>
+            <th scope="col">phone</th>
+            <th scope="col">email</th>
+            <th scope="col">adresse</th>
+            <th scope="col">edit or delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          while ($data = mysqli_fetch_assoc($sql)) {
 
-    </tbody>
-  </table>
-  <button type="button" class="btn btn-primary d-block mx-auto" data-bs-toggle="modal" data-bs-target="#add">Add New Contact</button>
+          ?>
+            <tr>
+              <td><?php echo $data['name'] ?></td>
+              <td><?php echo $data['phone'] ?></td>
+              <td><?php echo $data['email'] ?></td>
+              <td><?php echo $data['adresse'] ?></td>
+              <td>
+                <a  href="update.php?id=<?php echo $data['id'] ?>"><button type='button' class='btn btn-secondary'>Edit</button></a>
+                <a  href="delete.php?id=<?php echo $data['id'] ?>"><button type='button' class='btn btn-danger'>Delet</button></a>
+              </td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
 
 </body>
 

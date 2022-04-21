@@ -1,6 +1,34 @@
 <?php
-include('conect.php');
+  require_once 'operation.php';
 
+  $clt = new Clt();
+
+  $id = $_SESSION["id"];
+
+  if (isset($_POST["submit"])) {
+    $name = $_POST["name"];
+    $phone = $_POST["phone"];
+    $email = $_POST["email"];
+    $adresse = $_POST["adresse"];
+
+    if ($clt->Insert($name,$phone,$email,$adresse,$id)) {
+      echo "<script>
+      Swal.fire(
+          'Success!',
+          'You clicked the button!',
+          'success'
+      );              
+      </script>";
+    }else {
+      echo "<script>
+      Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'User already exist!',
+      }) ;   
+      </script>";
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,12 +67,16 @@ include('conect.php');
               <input type="name" name="name" class="form-control  w-75 ms-5" required>
             </div>
             <div class="mb-3 mt-3">
-              <label for="email" class="form-label ms-5 fw-bold">Phone</label>
+              <label for="phone" class="form-label ms-5 fw-bold">Phone</label>
+              <input type="number" name="phone" class="form-control w-75 ms-5" required>
+            </div>
+            <div>
+              <label for="email" class="form-label ms-5 fw-bold">Email</label>
               <input type="email" name="email" class="form-control w-75 ms-5" required>
             </div>
             <div>
-              <label for="phone" class="form-label ms-5 fw-bold">Adresse</label>
-              <input type="text" name="phone" class="form-control w-75 ms-5" required>
+              <label for="adresse" class="form-label ms-5 fw-bold">Adresse</label>
+              <input type="text" name="adresse" class="form-control w-75 ms-5" required>
             </div>
             <button type="submit" name="submit" class="btn btn-primary mt-4 ms-5 mb-3 fw-bold w-25" style="background-color: #2c3e50;">Save</button>
           </form>
@@ -57,8 +89,8 @@ include('conect.php');
     <div class="container-fluid">
       <a class="navbar-brand" style="color: white;">Contact Liste</a>
       <form class="d-flex">
-        <a href="./Contactliste.php" style="text-decoration: none; color:gray; margin-right:50px;">Contact List</a>
-        <a href="./login.php" style="text-decoration: none; color:gray; ">Logout</a>
+        <a href="./Contactliste.php" style="text-decoration: none; color:white; margin-right:50px;">Contact List</a>
+        <a href="./login.php" style="text-decoration: none; color:white; ">Logout</a>
       </form>
     </div>
   </nav>
@@ -66,11 +98,11 @@ include('conect.php');
   <div class="card text-center mx-auto mt-5" style="width: 30%;">
     <img src="img/lp.png" class="card-img-top" alt="photo">
     <div class="card-body">
-      <h5 class="card-title" style="color: #2c3e50;font-family: 'Pacifico', cursive;">Welcome </h5>
+      <h5 class="card-title" style="color: #2c3e50;font-family: 'Pacifico', cursive;">Welcome !!</h5>
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item fw-bold" style="color: #636FA4;">Username : <?php echo $_SESSION['name']; ?></li>
-      <li class="list-group-item fw-bold" style="color: #636FA4;">Sign Up Date : </li>
+      <li class="list-group-item fw-bold" style="color: #636FA4;">Sign Up Date : <?php //echo $row['date']; ?></li>
       <li class="list-group-item fw-bold" style="color: #636FA4;">Last Login : </li>
     </ul>
     <div class="card-body">
